@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+*::before,
+*::after {
+  text-decoration: inherit;
+  vertical-align: inherit;
+}
+
+html {
+  tab-size: 4;
+}
+
+button {
+  cursor: pointer;
+}
+
+input {
+  border-radius: 0;
+  border: none;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #212121;
+}
