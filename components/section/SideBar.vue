@@ -35,21 +35,23 @@
       <span class="divider my-4" />
       <div class="details-container w-75">
         <h3 class="text-h6 text-center">Details Of This Day</h3>
-        <h3 class="text-h6 d-flex justify-center my-2">
+        <h3 class="text-h6 d-flex justify-center my-4">
           {{ appStore.locationName }}
         </h3>
         <ul
-          class="details-list mt-3 d-flex align-center justify-space-between w-75 mx-auto"
+          class="details-list mt-6 d-flex align-center justify-space-between w-75 mx-auto"
         >
           <li
             class="details-list__item py-2 px-4 rounded-lg active"
             @click="listActiveHandler"
+            data-index="5"
           >
             5 days
           </li>
           <li
             class="details-list__item py-2 px-4 rounded-lg"
             @click="listActiveHandler"
+            data-index="14"
           >
             14 days
           </li>
@@ -57,7 +59,13 @@
       </div>
       <!--------------------- End of details ------------------------------>
       <!--------------------- Start of Days List -------------------------->
-      <elementDayCard />
+      <div class="day-card-container mt-2 pa-2 d-flex flex-column">
+        <elementDayCard
+          v-for="(card, index) in appStore.days.slice(0, max)"
+          :kay="index"
+          :card="card"
+        />
+      </div>
       <!--------------------- End of Days List ---------------------------->
     </div>
   </div>
@@ -66,11 +74,12 @@
 <script setup>
 const appStore = useAppStore();
 const cityName = ref("");
-const isShow = ref(false);
+const max = ref(5);
 
 function listActiveHandler(event) {
   document.querySelector(".active").classList.remove("active");
   event.target.classList.add("active");
+  max.value = event.target.dataset.index;
 }
 
 async function search() {
@@ -115,5 +124,12 @@ async function search() {
 
 .details-list__item.active {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.day-card-container {
+  height: max-content;
+  max-height: 410px;
+  overflow-y: scroll;
+  row-gap: 10px;
 }
 </style>
