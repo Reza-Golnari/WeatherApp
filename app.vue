@@ -21,23 +21,40 @@ onMounted(async () => {
     navigator.geolocation.getCurrentPosition(async (position) => {
       clientPosition.lat = position.coords.latitude;
       clientPosition.long = position.coords.longitude;
-      await useFetch(
-        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${clientPosition.lat},${clientPosition.long}?key=PYGC9TLSYBHBDHHH7AKLNKXVM`
-      ).then((res) => {
-        appStore.days = res.data.value.days;
-        appStore.locationName = res.data.value.address;
-        appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
-        console.log(appStore.days[0].temp);
+      // await useFetch(
+      //   `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${clientPosition.lat},${clientPosition.long}?key=PYGC9TLSYBHBDHHH7AKLNKXVM`
+      // ).then((res) => {
+      //   appStore.days = res.data.value.days;
+      //   appStore.locationName = res.data.value.address;
+      //   appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
+      //   console.log(appStore.days[0]);
+      // });
+
+      // await useFetch("/api/weather-position", {
+      //   method: "post",
+      //   body: {
+      //     lat: clientPosition.lat,
+      //     long: clientPosition.long,
+      //   },
+      // }).then((res) => {
+      //   console.log(res.data.value);
+      // });
+
+      const { data: response } = await useFetch("/api/weather-position", {
+        method: "POST",
+        body: {
+          lat: clientPosition.lat,
+          long: clientPosition.long,
+        },
       });
+      appStore.days = response.value.data.days;
+      appStore.locationName = response.value.data.address;
+      appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
     });
   } else {
-    await useFetch(
-      "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Tehran?key=PYGC9TLSYBHBDHHH7AKLNKXVM"
-    ).then((res) => {
-      appStore.days = res.data.value.days;
-      appStore.locationName = res.data.value.address;
-      console.log(appStore.days);
-    });
+    const { data: response } = await useFetch("/api/weather-default");
+    appStore.days = response.value.data.days;
+    appStore.locationName = response.value.data.address;
   }
 });
 </script>

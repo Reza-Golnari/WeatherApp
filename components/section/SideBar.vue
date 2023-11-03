@@ -3,23 +3,24 @@
     <v-card class="mx-auto" color="transparent" width="300" flat>
       <v-card-text>
         <v-text-field
-          :loading="loading"
           density="compact"
           variant="solo"
           label="Search templates"
           append-inner-icon="mdi-magnify"
           single-line
           hide-details
-          @click:append-inner="onClick"
+          @click:append-inner="search"
+          v-model="cityName"
         ></v-text-field>
       </v-card-text>
     </v-card>
     <h2 class="text-h1">{{ appStore.tempC }}°C</h2>
     <h5 class="d-flex align-center justify-center wind">
       <iconsWind />
-      <p class="wind-path">NorthWest</p>
-      ,
-      <p class="wind-spees">38.9</p>
+      <p class="wind-path">Wind Speed :</p>
+      <p class="wind-spees" v-if="appStore.days">
+        {{ appStore.days[0].windspeed }}
+      </p>
       km/h
     </h5>
     <span class="divider my-3" />
@@ -49,6 +50,7 @@
 <script setup>
 const appStore = useAppStore();
 const listItems = ref([]);
+const cityName = ref("");
 
 function listActiveHandler(event) {
   listItems.value.forEach((item) => {
@@ -56,6 +58,8 @@ function listActiveHandler(event) {
   });
   event.target.classList.add("active");
 }
+
+function search() {}
 
 onMounted(() => {
   listItems.value = document.querySelectorAll(".details-list__item");

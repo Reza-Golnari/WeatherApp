@@ -23,4 +23,8 @@ export default defineNuxtConfig({
   },
 
   css: ["~/assets/css/main.css"],
+
+  runtimeConfig: {
+    currentToken: process.env.WEATHER_TOKEN,
+  },
 });
