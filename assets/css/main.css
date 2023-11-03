@@ -11,6 +11,10 @@
   vertical-align: inherit;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 html {
   tab-size: 4;
 }
@@ -27,8 +31,8 @@ input {
 body {
   width: 100%;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #212121;
+  background-image: url("~/assets/images/weather (1).jpg");
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
 }
