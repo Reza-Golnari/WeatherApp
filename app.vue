@@ -18,7 +18,7 @@ onMounted(async () => {
       clientPosition.lat = position.coords.latitude;
       clientPosition.long = position.coords.longitude;
 
-      const { data: response } = await useFetch("/api/weather-position", {
+      const { data: response } = await useLazyFetch("/api/weather-position", {
         method: "POST",
         body: {
           lat: clientPosition.lat,
@@ -30,7 +30,7 @@ onMounted(async () => {
       appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
     });
   } else {
-    const { data: response } = await useFetch("/api/weather-default");
+    const { data: response } = await useLazyFetch("/api/weather-default");
     appStore.days = response.value.data.days;
     appStore.locationName = response.value.data.address;
     appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
