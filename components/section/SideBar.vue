@@ -10,6 +10,7 @@
           single-line
           hide-details
           @click:append-inner="search"
+          @keypress.enter.prevent="search"
           v-model="cityName"
         ></v-text-field>
       </v-card-text>
@@ -59,7 +60,19 @@ function listActiveHandler(event) {
   event.target.classList.add("active");
 }
 
-function search() {}
+async function search() {
+  const { data: response } = await useFetch("/api/weather", {
+    method: "POST",
+    body: {
+      cityName,
+    },
+  });
+  appStore.days = response.value.data.days;
+  appStore.locationName = response.value.data.address;
+  appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
+
+  cityName.value = "";
+}
 
 onMounted(() => {
   listItems.value = document.querySelectorAll(".details-list__item");
