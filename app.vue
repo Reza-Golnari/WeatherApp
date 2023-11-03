@@ -5,26 +5,31 @@
 </template>
 
 <script setup>
-// const cityName = ref("");
+const appStore = useAppStore();
 
-// const rules = [
-//   (value) => !!value || "Please enter a city name",
-//   (value) => value.length >= 2 || "The city name must have 2 of more letters",
-// ];
+const clientPosition = reactive({
+  lat: null,
+  long: null,
+});
 
-// async function search() {
-//   if (cityName.value) {
-//     await useFetch(
-//       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName.value}?key=PYGC9TLSYBHBDHHH7AKLNKXVM`
-//     )
-//       .then((res) => {
-//         console.log(res.data.value);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   }
-// }
+onMounted(async () => {
+  // await useFetch(
+  //   "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London,UK?key=PYGC9TLSYBHBDHHH7AKLNKXVM"
+  // ).then((res) => console.log(res));
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      clientPosition.lat = position.coords.latitude;
+      clientPosition.long = position.coords.longitude;
+      await useFetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${clientPosition.lat},${clientPosition.long}?key=PYGC9TLSYBHBDHHH7AKLNKXVM`
+      ).then((res) => {
+        appStore.days = res.data.value.days;
+        console.log(appStore.days);
+      });
+    });
+  }
+});
 </script>
 
 <style scoped>

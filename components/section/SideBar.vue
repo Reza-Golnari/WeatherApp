@@ -1,5 +1,5 @@
 <template>
-  <div class="w-25 h-100 container d-flex flex-column justify-start">
+  <div class="container d-flex flex-column justify-start">
     <v-card class="mx-auto" color="transparent" width="300" flat>
       <v-card-text>
         <v-text-field
@@ -22,16 +22,47 @@
       <p class="wind-spees">38.9</p>
       km/h
     </h5>
-    <span class="divider" />
+    <span class="divider my-3" />
+    <div class="details-container">
+      <h3 class="text-h6">Details Of This Day</h3>
+      <h3 class="text-h6 d-flex justify-center">London</h3>
+      <ul class="details-list mt-3 d-flex align-center justify-space-between">
+        <li
+          class="details-list__item py-2 px-4 rounded-lg active"
+          @click="listActiveHandler"
+        >
+          5 days
+        </li>
+        <li
+          class="details-list__item py-2 px-4 rounded-lg"
+          @click="listActiveHandler"
+        >
+          14 days
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup>
 const appStore = useAppStore();
+const listItems = ref([]);
+
+function listActiveHandler(event) {
+  listItems.value.forEach((item) => {
+    item.classList.remove("active");
+  });
+  event.target.classList.add("active");
+}
+
+onMounted(() => {
+  listItems.value = document.querySelectorAll(".details-list__item");
+});
 </script>
 
 <style scoped>
 .container {
+  width: 350px !important;
   row-gap: 10px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
@@ -46,5 +77,14 @@ const appStore = useAppStore();
 
 .wind {
   column-gap: 5px;
+}
+
+.details-list__item {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.details-list__item.active {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 </style>
