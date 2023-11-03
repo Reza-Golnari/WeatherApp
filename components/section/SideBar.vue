@@ -14,7 +14,7 @@
         ></v-text-field>
       </v-card-text>
     </v-card>
-    <h2 class="text-h1">11°C</h2>
+    <h2 class="text-h1">{{ appStore.tempC }}°C</h2>
     <h5 class="d-flex align-center justify-center wind">
       <iconsWind />
       <p class="wind-path">NorthWest</p>
@@ -23,10 +23,12 @@
       km/h
     </h5>
     <span class="divider my-3" />
-    <div class="details-container">
-      <h3 class="text-h6">Details Of This Day</h3>
-      <h3 class="text-h6 d-flex justify-center">London</h3>
-      <ul class="details-list mt-3 d-flex align-center justify-space-between">
+    <div class="details-container w-75">
+      <h3 class="text-h6 text-center">Details Of This Day</h3>
+      <h3 class="text-h6 d-flex justify-center">{{ appStore.locationName }}</h3>
+      <ul
+        class="details-list mt-3 d-flex align-center justify-space-between w-75 mx-auto"
+      >
         <li
           class="details-list__item py-2 px-4 rounded-lg active"
           @click="listActiveHandler"

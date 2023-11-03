@@ -25,8 +25,18 @@ onMounted(async () => {
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${clientPosition.lat},${clientPosition.long}?key=PYGC9TLSYBHBDHHH7AKLNKXVM`
       ).then((res) => {
         appStore.days = res.data.value.days;
-        console.log(appStore.days);
+        appStore.locationName = res.data.value.address;
+        appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
+        console.log(appStore.days[0].temp);
       });
+    });
+  } else {
+    await useFetch(
+      "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Tehran?key=PYGC9TLSYBHBDHHH7AKLNKXVM"
+    ).then((res) => {
+      appStore.days = res.data.value.days;
+      appStore.locationName = res.data.value.address;
+      console.log(appStore.days);
     });
   }
 });

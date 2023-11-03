@@ -4,11 +4,8 @@ export const useAppStore = defineStore("appStore", {
   state: () => {
     return {
       days: [],
+      locationName: null,
+      tempC: null,
     };
-  },
-  actions: {
-    increment() {
-      this.count++;
-    },
   },
 });
