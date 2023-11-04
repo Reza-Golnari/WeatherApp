@@ -1,13 +1,15 @@
 <template>
   <div class="day-card d-flex pa-4 rounded-lg">
-    <img src="~/assets/svgs/clear-day.svg" />
+    <img :src="`/svg/${card.icon}.svg`" />
     <div class="info">
-      <p class="date"></p>
+      <p class="date">{{ card.icon }}</p>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const { card } = defineProps(["card"]);
+</script>
 
 <style scoped>
 .day-card {
@@ -17,5 +19,6 @@
 
 img {
   width: 40px;
+  min-height: 40px;
 }
 </style>
