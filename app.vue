@@ -26,7 +26,7 @@ onMounted(async () => {
         },
       });
       appStore.days = response.value.data.days;
-      appStore.locationName = "Your City";
+      appStore.locationName = "Your Location";
       appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
     });
   } else {
