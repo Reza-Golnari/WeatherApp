@@ -6,6 +6,7 @@ export const useAppStore = defineStore("appStore", {
       days: null,
       locationName: null,
       tempC: null,
+      dayInfo: null,
     };
   },
 });

@@ -35,8 +35,13 @@ li {
 body {
   width: 100%;
   height: 100vh;
-  background-image: url("~/assets/images/weather (1).jpg");
-  background-position: center;
-  background-size: cover;
-  overflow: hidden;
+  background: linear-gradient(
+        to bottom,
+        #000000b6 0%,
+        transparent 40%,
+        transparent 60%,
+        #000000bd 100%
+      )
+      center / cover,
+    url("~/assets/images/weather (1).jpg") center / cover;
 }

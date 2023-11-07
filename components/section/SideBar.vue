@@ -1,5 +1,5 @@
 <template>
-  <div class="container d-flex justify-center align-center">
+  <div class="container d-flex justify-center align-center pr-2">
     <elementLoading v-if="!appStore.days" />
     <div
       class="content-box d-flex flex-column justify-start align-center w-100 h-100"
@@ -42,7 +42,7 @@
           class="details-list mt-6 d-flex align-center justify-space-between w-75 mx-auto"
         >
           <li
-            class="details-list__item py-2 px-4 rounded-lg active"
+            class="details-list__item py-2 px-4 rounded-lg active-item"
             @click="listActiveHandler"
             data-index="5"
           >
@@ -77,8 +77,8 @@ const cityName = ref("");
 const max = ref(5);
 
 function listActiveHandler(event) {
-  document.querySelector(".active").classList.remove("active");
-  event.target.classList.add("active");
+  document.querySelector(".active-item").classList.remove("active-item");
+  event.target.classList.add("active-item");
   max.value = event.target.dataset.index;
 }
 
@@ -93,6 +93,7 @@ async function search() {
   appStore.days = response.value.data.days;
   appStore.locationName = response.value.data.address;
   appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
+  appStore.dayInfo = appStore.days[0];
 
   cityName.value = "";
 }
@@ -100,7 +101,7 @@ async function search() {
 
 <style scoped>
 .container {
-  width: 350px !important;
+  width: clamp(450px, 450px, 450px) !important;
   row-gap: 10px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
@@ -122,7 +123,7 @@ async function search() {
   transition: all 0.2s;
 }
 
-.details-list__item.active {
+.details-list__item.active-item {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
