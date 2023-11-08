@@ -4,8 +4,10 @@
       class="container__left h-100 w-100 d-flex flex-column justify-space-between"
     >
       <nav class="container__left__navbar d-flex justify-end pa-4">
-        <h4 class="navbar-date text-h6">{{ dateString }}</h4>
-        <h4 class="navbar-time ml-5 text-h6">11:00</h4>
+        <h4 class="navbar-date text-h6">{{ appStore.dayDate }}</h4>
+        <h4 class="navbar-time ml-5 text-h6" v-if="appStore.activeHour">
+          {{ appStore.activeHour.datetime.slice(0, 5) }}
+        </h4>
       </nav>
       <footer>hi</footer>
     </div>
@@ -15,7 +17,7 @@
 
 <script setup>
 const appStore = useAppStore();
-const dateString = ref("");
+const { saveDataInStore } = useSaveData();
 
 const clientPosition = reactive({
   lat: null,
@@ -35,31 +37,14 @@ onMounted(async () => {
           long: clientPosition.long,
         },
       });
-      appStore.days = response.value.data.days;
       appStore.locationName = "Your Location";
-      appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
-      appStore.dayInfo = appStore.days[0];
-      const date = new Date(appStore.dayInfo.datetime);
-      const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      };
-      dateString.value = date.toLocaleDateString("en-US", options);
+      saveDataInStore(response.value.data.days);
+      console.log(appStore.dayInfo);
     });
   } else {
     const { data: response } = await useLazyFetch("/api/weather-default");
-    appStore.days = response.value.data.days;
     appStore.locationName = response.value.data.address;
-    appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
-    appStore.dayInfo = appStore.days[0];
-    const date = new Date(appStore.dayInfo.datetime);
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    dateString.value = date.toLocaleDateString("en-US", options);
+    saveDataInStore(response.value.data.days);
   }
 });
 </script>

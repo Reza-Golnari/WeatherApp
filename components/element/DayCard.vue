@@ -3,7 +3,9 @@
     <img :src="`/svg/${card.icon}.svg`" />
     <div class="info h-max d-flex flex-column justify-space-between">
       <p class="date">{{ dateString }}</p>
-      <p class="status">{{ card.preciptype[0] }}</p>
+      <p class="status">
+        {{ card.preciptype ? card.preciptype[0] : "Clear" }}
+      </p>
     </div>
     <div
       class="min-max-box d-flex flex-column justify-space-between align-center ml-auto pr-1"
@@ -15,14 +17,21 @@
 </template>
 
 <script setup>
+const appStore = useAppStore();
 const { card } = defineProps(["card"]);
-const date = new Date(card.datetime);
+let date = new Date(card.datetime);
 const options = {
   year: "numeric",
   month: "long",
   day: "numeric",
 };
 const dateString = date.toLocaleDateString("en-US", options);
+
+function setDayInfo() {
+  appStore.dayInfo = card;
+  date = new Date(appStore.dayInfo.datetime);
+  appStore.dayDate = date.toLocaleDateString("en-US", options);
+}
 </script>
 
 <style scoped>

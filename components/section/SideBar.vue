@@ -73,6 +73,7 @@
 
 <script setup>
 const appStore = useAppStore();
+const { saveDataInStore } = useSaveData();
 const cityName = ref("");
 const max = ref(5);
 
@@ -90,11 +91,10 @@ async function search() {
       cityName,
     },
   });
-  appStore.days = response.value.data.days;
-  appStore.locationName = response.value.data.address;
-  appStore.tempC = Math.floor(((appStore.days[0].temp - 32) * 5) / 9);
-  appStore.dayInfo = appStore.days[0];
 
+  appStore.locationName = response.value.data.address;
+  saveDataInStore(response.value.data.days);
+  appStore.dayInfo = appStore.days[0];
   cityName.value = "";
 }
 </script>

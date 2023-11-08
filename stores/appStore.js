@@ -7,6 +7,13 @@ export const useAppStore = defineStore("appStore", {
       locationName: null,
       tempC: null,
       dayInfo: null,
+      dayDate: null,
+      activeHour: null,
     };
+  },
+  actions: {
+    setDays(data) {
+      this.days = data;
+    },
   },
 });
