@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <Head>
+      <Title>Weather App</Title>
+    </Head>
     <div
       class="container__left h-100 w-75 d-flex flex-column justify-space-between align-end"
     >
