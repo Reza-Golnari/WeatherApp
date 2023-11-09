@@ -30,31 +30,29 @@ const clientPosition = reactive({
   long: null,
 });
 
-function preLoading(array) {
-  let list = [];
-  for (let i = 0; i < array.length; i++) {
-    let img = new Image();
-    img.onload = () => {
-      let index = list.indexOf(this);
-      if (index !== -1) {
-        list.slice(index, 1);
-      }
-    };
-    list.push(img);
-    img.src = array[i];
-  }
-}
+const images = ref([
+  "/images/weather (1).jpg",
+  "/images/weather (2).jpg",
+  "/images/weather (3).jpg",
+  "/images/weather (4).jpg",
+  "/images/weather (5).jpg",
+  "/images/weather (6).jpg",
+]);
 
+function preloadImages() {
+  return Promise.all(
+    images.value.map((img) => {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.src = img;
+        image.onload = resolve;
+        image.onerror = reject;
+      });
+    })
+  );
+}
 onMounted(async () => {
-  const imgList = ref([
-    "/images/weather (1).jpg",
-    "/images/weather (2).jpg",
-    "/images/weather (3).jpg",
-    "/images/weather (4).jpg",
-    "/images/weather (5).jpg",
-    "/images/weather (6).jpg",
-  ]);
-  preLoading(imgList);
+  await preloadImages();
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async (position) => {
