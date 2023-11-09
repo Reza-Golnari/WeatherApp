@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div
-      class="container__left h-100 w-100 d-flex flex-column justify-space-between"
+      class="container__left h-100 w-75 d-flex flex-column justify-space-between align-end"
     >
       <nav class="container__left__navbar d-flex justify-end pa-4">
         <h4 class="navbar-date text-h6">{{ appStore.dayDate }}</h4>
@@ -9,7 +9,7 @@
           {{ appStore.activeHour.datetime.slice(0, 5) }}
         </h4>
       </nav>
-      <footer>hi</footer>
+      <sectionHoursList />
     </div>
     <sectionSideBar />
   </div>
