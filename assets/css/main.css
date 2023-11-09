@@ -1,3 +1,7 @@
+:root {
+  --bg: url("/images/weather (1).jpg");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -43,5 +47,5 @@ body {
         #000000bd 100%
       )
       center / cover,
-    url("~/assets/images/weather (1).jpg") center / cover;
+    var(--bg) center / cover;
 }

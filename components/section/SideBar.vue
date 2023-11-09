@@ -74,6 +74,7 @@
 <script setup>
 const appStore = useAppStore();
 const { saveDataInStore } = useSaveData();
+const { changeBg } = useBgChanger();
 const cityName = ref("");
 const max = ref(5);
 
@@ -91,11 +92,10 @@ async function search() {
       cityName,
     },
   });
-
   appStore.locationName = response.value.data.address;
   saveDataInStore(response.value.data.days);
-  appStore.dayInfo = appStore.days[0];
   cityName.value = "";
+  changeBg(appStore.activeHour.conditions.toLowerCase());
 }
 </script>
 

@@ -9,7 +9,12 @@
           {{ appStore.activeHour.datetime.slice(0, 5) }}
         </h4>
       </nav>
-      <sectionHoursList />
+      <div class="bottom-box w-100">
+        <h2 class="text-h2 big-status" v-if="appStore.activeHour">
+          {{ appStore.activeHour.conditions }}
+        </h2>
+        <sectionHoursList />
+      </div>
     </div>
     <sectionSideBar />
   </div>
@@ -18,13 +23,39 @@
 <script setup>
 const appStore = useAppStore();
 const { saveDataInStore } = useSaveData();
+const { changeBg } = useBgChanger();
 
 const clientPosition = reactive({
   lat: null,
   long: null,
 });
 
+function preLoading(array) {
+  let list = [];
+  for (let i = 0; i < array.length; i++) {
+    let img = new Image();
+    img.onload = () => {
+      let index = list.indexOf(this);
+      if (index !== -1) {
+        list.slice(index, 1);
+      }
+    };
+    list.push(img);
+    img.src = array[i];
+  }
+}
+
 onMounted(async () => {
+  const imgList = ref([
+    "/images/weather (1).jpg",
+    "/images/weather (2).jpg",
+    "/images/weather (3).jpg",
+    "/images/weather (4).jpg",
+    "/images/weather (5).jpg",
+    "/images/weather (6).jpg",
+  ]);
+  preLoading(imgList);
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async (position) => {
       clientPosition.lat = position.coords.latitude;
@@ -39,17 +70,18 @@ onMounted(async () => {
       });
       appStore.locationName = "Your Location";
       saveDataInStore(response.value.data.days);
-      console.log(appStore.dayInfo);
+      changeBg(appStore.activeHour.conditions.toLowerCase());
     });
   } else {
     const { data: response } = await useLazyFetch("/api/weather-default");
     appStore.locationName = response.value.data.address;
     saveDataInStore(response.value.data.days);
+    changeBg(appStore.activeHour.conditions.toLowerCase());
   }
 });
 </script>
 
-<style scoped>
+<style>
 .container {
   display: flex;
   align-items: center;
@@ -61,5 +93,15 @@ onMounted(async () => {
 .navbar-time {
   border-left: 1px solid #ffffff93;
   padding-left: 20px;
+}
+
+.bottom-box {
+  direction: rtl;
+}
+
+.big-status {
+  font-weight: 500;
+  margin-right: 20px;
+  color: #ddd;
 }
 </style>

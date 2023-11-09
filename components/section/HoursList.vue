@@ -7,7 +7,7 @@
     <button class="slider-btn prev-btn d-flex align-center" ref="prev">
       <IconsPrevIcon />
     </button>
-    <div class="wrapper d-flex justify-start" ref="container">
+    <div class="wrapper d-flex justify-start pt-5" ref="container">
       <elementHourCard
         v-for="(card, index) in appStore.dayInfo.hours"
         :key="index"
@@ -59,11 +59,12 @@ watchEffect(() => {
   flex-wrap: nowrap;
   direction: rtl;
   overflow: scroll;
+  border-top: 1px solid #ffffff73;
 }
 
 .slider-btn {
   position: absolute;
-  top: 45%;
+  top: 50%;
   font-size: 2rem;
   z-index: 999;
 }
