@@ -1,5 +1,5 @@
 <template>
-  <div class="day-card d-flex rounded-lg" @click="setDayInfo">
+  <div class="day-card d-flex rounded-lg w-100" @click="setDayInfo">
     <img :src="`/svg/${card.icon}.svg`" />
     <div class="info h-max d-flex flex-column justify-space-between">
       <p class="date">{{ dateString }}</p>

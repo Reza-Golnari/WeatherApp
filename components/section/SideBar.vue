@@ -59,7 +59,9 @@
       </div>
       <!--------------------- End of details ------------------------------>
       <!--------------------- Start of Days List -------------------------->
-      <div class="day-card-container mt-2 pa-2 d-flex flex-column">
+      <div
+        class="day-card-container mt-2 pa-2 d-flex flex-column w-100 align-center"
+      >
         <elementDayCard
           v-for="(card, index) in appStore.days.slice(0, max)"
           :kay="index"
@@ -67,6 +69,7 @@
         />
       </div>
       <!--------------------- End of Days List ---------------------------->
+      <SectionHoursList class="my-0 list" />
     </div>
   </div>
 </template>
@@ -103,6 +106,7 @@ async function search() {
 .container {
   width: clamp(450px, 450px, 450px) !important;
   row-gap: 10px;
+  min-height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
 }
@@ -132,5 +136,26 @@ async function search() {
   max-height: 410px;
   overflow-y: scroll;
   row-gap: 10px;
+}
+
+.list {
+  display: none !important;
+}
+
+@media screen and (max-width: 700px) {
+  .container {
+    max-width: none !important;
+    width: 100vw !important;
+    height: max-content;
+    padding-top: 17rem;
+  }
+
+  .text-h1 {
+    margin-top: 20px;
+  }
+
+  .list {
+    display: flex !important;
+  }
 }
 </style>

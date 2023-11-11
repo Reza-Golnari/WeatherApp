@@ -45,12 +45,11 @@ watchEffect(() => {
 <style scoped>
 .hours-container {
   position: relative;
-  width: 100% !important;
-  max-width: 100%;
+  width: 100%;
+  max-width: 100vw;
   column-gap: 5px;
   flex-wrap: nowrap;
-  direction: rtl;
-  overflow: scroll;
+  overflow: hidden;
 }
 .wrapper {
   width: 100% !important;
@@ -67,14 +66,17 @@ watchEffect(() => {
   top: 50%;
   font-size: 2rem;
   z-index: 999;
+  transform: translateY(-50%);
 }
 
 .next-btn {
   right: 0px;
-  transform: translateY(-50%);
 }
 .prev-btn {
-  left: 0px;
-  transform: translateY(-50%);
+  position: fixed;
+  left: 0vw;
+  bottom: 50px;
+  top: unset;
+  /* transform: translateY(); */
 }
 </style>

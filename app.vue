@@ -19,7 +19,7 @@
         <sectionHoursList />
       </div>
     </div>
-    <sectionSideBar />
+    <sectionSideBar class="sideBar" />
   </div>
 </template>
 
@@ -104,5 +104,24 @@ onMounted(async () => {
   font-weight: 500;
   margin-right: 20px;
   color: #ddd;
+}
+
+@media screen and (max-width: 950px) {
+  .big-status {
+    font-size: 3rem !important;
+  }
+}
+@media screen and (max-width: 800px) {
+  .big-status {
+    font-size: 2.5rem !important;
+  }
+}
+@media screen and (max-width: 700px) {
+  .container__left {
+    display: none !important;
+  }
+  .sideBar {
+    width: 100vw !important;
+  }
 }
 </style>
